@@ -3,6 +3,7 @@ const express = require('express');
 const config = require('config');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const debug = require('debug')('app:startup');
 
 const { logger } = require('./logger');
 const { auth } = require('./auth');
@@ -23,7 +24,7 @@ console.log('Mail password: ', config.get('mail.password'));
 
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
-  console.log('Morgan...');
+  debug('Morgan...');
 }
 
 app.use(logger);
