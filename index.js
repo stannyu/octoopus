@@ -1,22 +1,19 @@
 const Joi = require('joi');
 const express = require('express');
 
+const { logger } = require('./logger');
+const { auth } = require('./auth');
+
 const app = express();
 app.use(express.json());
 
+app.use(logger);
+app.use(auth);
+
 const courses = [
-  {
-    id: 1,
-    name: 'course 1',
-  },
-  {
-    id: 2,
-    name: 'course 2',
-  },
-  {
-    id: 3,
-    name: 'course 3',
-  },
+  { id: 1, name: 'course 1' },
+  { id: 2, name: 'course 2' },
+  { id: 3, name: 'course 3' },
 ];
 
 app.get('/', (req, res) => {
