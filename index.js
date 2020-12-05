@@ -61,7 +61,45 @@ async function getCourses(params) {
   console.log('Courses: ', courses);
 }
 
+// Update and save approach
+// async function updateCourse(courseId) {
+//   const course = await Course.findById(courseId);
+
+//   if (!course) return;
+//   course.isPublished = true;
+//   course.author = 'Just an author';
+
+//   // OR :
+//   // course.set({
+//   //   isPublished: true,
+//   //   author: 'Just an author',
+//   // });
+
+//   const result = await course.save();
+//   console.log(result);
+// }
+
+// Save first and retrieve updated
+// with help of mongo update operators
+async function updateCourse(courseId) {
+  // findByIdAndUpdate - if needed to receive record as a result
+  // here course is just a diff
+  const course = await Course.update(
+    { _id: courseId },
+    {
+      $set: {
+        author: 'Stas',
+        isPublished: false,
+      },
+    }
+  );
+
+  console.log('Course: ', course);
+}
+
+// updateCourse();
 // createCourse();
+
 getCourses();
 
 app.use('/', home);
