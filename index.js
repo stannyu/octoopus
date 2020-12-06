@@ -52,12 +52,13 @@ async function getCourses(params) {
   const pageNumber = 2;
   const pageSize = 10;
 
-  const courses = await Course.find({ author: 'Mosh', isPublished: true })
+  // const courses = await Course.find({ author: 'Mosh', isPublished: true })
+  const courses = await Course.find()
     // .skip((pageNumber - 1) * pageSize) ==> represents pagination
     //.limit(pagesize) ==>
     .limit(10)
     .sort({ name: -1 })
-    .select({ name: 1, tags: 1 }); // .count() instead will return number of records
+    .select({ name: 1, tags: 1, author: 1 }); // .count() instead will return number of records
   console.log('Courses: ', courses);
 }
 
@@ -97,8 +98,14 @@ async function updateCourse(courseId) {
   console.log('Course: ', course);
 }
 
+async function deleteCourse(courseId) {
+  const deletedCourse = await Course.deleteOne({ _id: courseId });
+  console.log(deletedCourse);
+}
+
 // updateCourse();
 // createCourse();
+// deleteCourse('5fcbc70a3158889e089d2e59');
 
 getCourses();
 
