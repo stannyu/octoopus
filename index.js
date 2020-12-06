@@ -11,7 +11,7 @@ mongoose.set('useUnifiedTopology', true);
 //ROUTES
 const { home } = require('./routes/home');
 const { genres } = require('./routes/genres');
-const { func } = require('joi');
+const { func, required } = require('joi');
 
 //MIDDLEWARE
 app.use(express.json());
@@ -28,24 +28,44 @@ mongoose
   .catch((err) => console.log('Could not connect to DB...', err));
 
 const courseSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   author: String,
   tags: [String],
+  category: {
+    type: String,
+    required: true,
+    enum: ['web', 'mobile', 'dev'],
+  },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
+  price: {
+    type: Number,
+    required: function () {
+      return this.isPublished;
+    },
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse(params) {
   const course = new Course({
-    name: 'Angular course',
+    name: 'Computer Science course',
     author: 'Mosh',
+    category: 'dev',
     tags: ['angular', 'frontend'],
-    isPublished: true,
+    isPublished: false,
+    // price: 15,
   });
-  const result = await course.save();
-  console.log(result);
+
+  try {
+    // await course.validate(); // this line will end up in catch block in case of failed validation
+    const result = await course.save();
+    console.log('createCourse: ', result);
+  } catch (error) {
+    console.log(error.errors);
+    // console.log(error.message);
+  }
 }
 
 async function getCourses(params) {
