@@ -12,6 +12,7 @@ mongoose.set('useFindAndModify', false);
 //ROUTES
 const { home } = require('./routes/home');
 const { genres } = require('./routes/genres');
+const { customers } = require('./routes/customers');
 
 //MIDDLEWARE
 app.use(express.json());
@@ -26,9 +27,10 @@ mongoose
     console.log('Connected to DB');
   })
   .catch((err) => console.log('Could not connect to DB...', err));
-
-app.use('/', home);
-app.use('/api/genres', genres);
+  
+  app.use('/', home);
+  app.use('/api/genres', genres);
+  app.use('/api/customers', customers);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
