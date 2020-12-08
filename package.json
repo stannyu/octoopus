@@ -21,10 +21,13 @@
     "config": "^3.3.3",
     "debug": "^4.3.1",
     "express": "^4.17.1",
+    "fawn": "^2.1.5",
     "helmet": "^4.2.0",
     "joi": "^17.3.0",
     "mongoose": "^5.11.3",
     "morgan": "^1.10.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "joi-objectid": "^3.0.1"
+  }
 }
