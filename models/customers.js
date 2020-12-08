@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+const CUSTOMER_MODEL = 'Customer';
+const CUSTOMER_COLLECTION = 'customers';
+
 const customerSchema = new mongoose.Schema(
   {
     name: {
@@ -20,10 +23,10 @@ const customerSchema = new mongoose.Schema(
       maxlength: 20,
     },
   },
-  { collection: 'customers' }
+  { collection: CUSTOMER_COLLECTION }
 );
 
-const Customer = mongoose.model('Customer', customerSchema);
+const Customer = mongoose.model(CUSTOMER_MODEL, customerSchema);
 
 function validateCustomer(customer) {
   const schema = Joi.object({
@@ -34,4 +37,4 @@ function validateCustomer(customer) {
   return schema.validate(customer);
 }
 
-module.exports = { Customer, validateCustomer };
+module.exports = { Customer, validateCustomer, CUSTOMER_MODEL, CUSTOMER_COLLECTION };
