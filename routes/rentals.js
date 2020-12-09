@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
     customer: customer._id,
     movie: movie._id,
   });
+  // here we need to use transaction in order to complete two operations as a single unit
   // rental = await rental.save();
 
   // movie.numberInStock--;
