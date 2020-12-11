@@ -24,13 +24,13 @@ router.post('/', async (req, res) => {
   const genre = await Genre.findById(req.body.genre);
   if (!genre) return res.status(404).send(`Genre with id: ${req.body.genre} wasn't found`);
 
-  let movie = new Movie({
+  const movie = new Movie({
     title: req.body.title,
     numberInStock: req.body.numberInStock,
     dailyRentalRate: req.body.dailyRentalRate,
     genre: req.body.genre,
   });
-  movie = await movie.save();
+  await movie.save();
 
   res.send(movie);
 });
@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
     },
     { new: true }
   );
-  
+
   if (!movie) return res.status(404).send(`Movie with id: ${req.params.id} wasn't found`);
 
   res.send(movie);

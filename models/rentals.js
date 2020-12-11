@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
 
 const { CUSTOMER_MODEL } = require('./customers');
 const { MOVIE_MODEL } = require('./movies');
@@ -48,4 +47,4 @@ function validateRental(rental) {
   return schema.validate(rental);
 }
 
-module.exports = { Rental, validateRental, RENTALS_MODEL, RENTALS_COLLECTION };
+module.exports = { Rental, validateRental, RENTALS_COLLECTION };
