@@ -1,5 +1,3 @@
 {
-  "mail": {
-    "password": "octo_password"
-  }
+  "jwtPrivateKey": "octopus_secureKeyJwt"
 }
