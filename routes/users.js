@@ -31,6 +31,6 @@ async function listUsers() {
   console.log(users);
 }
 
-listUsers();
+// listUsers();
 
 module.exports = { users: router };
