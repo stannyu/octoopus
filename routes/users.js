@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const { auth } = require('../middleware/auth');
 
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
 const { User, validateUser } = require('../models/user');
+
+router.get('/me', auth, async (req, res) => {
+  const userId = req.user._id;
+  const user = await User.findById(userId);
+  const userToResponse = _.pick(user, ['_id', 'name', 'email']);
+
+  res.send(userToResponse);
+});
 
 router.post('/', async (req, res) => {
   const { error } = validateUser(req.body);
@@ -27,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 async function listUsers() {
-  const users = await User.find();
+  const users = await User.find().select('-password');
   console.log(users);
 }
 
