@@ -4,13 +4,30 @@ const router = express.Router();
 
 const { auth } = require('../middleware/auth');
 const { admin } = require('../middleware/admin');
+const { asyncMiddleware } = require('../middleware/async');
 
 const { Genre, validateGenre } = require('../models/genres');
 
 router.get('/', async (req, res) => {
+  // this line here to simulate error
+  // checking loggers to file and to db here
+  // throw new Error('Can not get genres list somehow...');
+
   const genres = await Genre.find().sort('name');
   res.send(genres);
 });
+
+/**
+ * This is an example of custom handler for unexpected server rejections
+ * this can be replaced with 'express-async-errors' package
+ */
+// router.get(
+//   '/',
+//   asyncMiddleware(async (req, res) => {
+//     const genres = await Genre.find().sort('name');
+//     res.send(genres);
+//   })
+// );
 
 router.get('/:id', async (req, res) => {
   const genre = await Genre.findById(req.params.id);
