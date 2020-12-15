@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
   // to get number of documents
   // const genres = await Genre.find().countDocuments();
-  
+
   const genres = await Genre.find().sort('name');
 
   // to query certain ammount of records
@@ -67,6 +67,7 @@ router.put('/:id', async (req, res) => {
   res.send(genre);
 });
 
+// should be an admin to delete this resource
 router.delete('/:id', auth, admin, async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) return res.status(404).send(`Genre with id: ${req.params.id} wasn't found`);
