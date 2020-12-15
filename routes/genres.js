@@ -13,7 +13,14 @@ router.get('/', async (req, res) => {
   // checking loggers to file and to db here
   // throw new Error('Can not get genres list somehow...');
 
+  // to get number of documents
+  // const genres = await Genre.find().countDocuments();
+  
   const genres = await Genre.find().sort('name');
+
+  // to query certain ammount of records
+  // const genres = await Genre.find().sort('name').skip(1).limit(2);
+
   res.send(genres);
 });
 
