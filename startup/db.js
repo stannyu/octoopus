@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const winston = require('winston');
+const config = require('config');
 
 function dbInitialization(params) {
   //DB
@@ -7,9 +8,11 @@ function dbInitialization(params) {
   mongoose.set('useFindAndModify', false);
   mongoose.set('useCreateIndex', true);
 
-  mongoose.connect('mongodb://localhost/octopus', { useNewUrlParser: true }).then(() => {
-    console.log('DB connected');
-    winston.info('Connected to DB');
+  const dbName = config.get('db');
+
+  mongoose.connect(dbName, { useNewUrlParser: true }).then(() => {
+    console.log('DB connected: ', dbName);
+    winston.info(`Connected to ${dbName}`);
   });
 }
 

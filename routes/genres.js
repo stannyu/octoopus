@@ -5,6 +5,7 @@ const router = express.Router();
 const { auth } = require('../middleware/auth');
 const { admin } = require('../middleware/admin');
 const { asyncMiddleware } = require('../middleware/async');
+const { validateObjectId } = require('../middleware/validate-object-id');
 
 const { Genre, validateGenre } = require('../models/genres');
 
@@ -36,7 +37,9 @@ router.get('/', async (req, res) => {
 //   })
 // );
 
-router.get('/:id', async (req, res) => {
+// if not use validateObjectId middleware ==> 500 will fall on testing
+// as invalid id will be passed, so execution will end up in serverError middleware and throw 500 error
+router.get('/:id', validateObjectId, async (req, res) => {
   const genre = await Genre.findById(req.params.id);
   if (!genre) return res.status(404).send(`Genre with id: ${req.params.id} wasn't found`);
 
