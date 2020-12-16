@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose",
     "start": "export octopus_secureKeyJwt=secure_phraze && nodemon index.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.19",
     "jest": "^26.6.3",
-    "joi-objectid": "^3.0.1"
+    "joi-objectid": "^3.0.1",
+    "supertest": "^6.0.1"
   }
 }
