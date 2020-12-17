@@ -1,5 +1,6 @@
 const request = require('supertest');
 const { Genre } = require('../../models/genres');
+const { User } = require('../../models/user');
 
 let server;
 
@@ -9,7 +10,7 @@ describe('/api/genres', () => {
   });
   afterEach(async () => {
     server.close();
-    await Genre.remove({});
+    await Genre.deleteMany({});
   });
 
   describe('GET /', () => {
@@ -36,9 +37,105 @@ describe('/api/genres', () => {
     });
 
     it('should return 404 if invalid id is passed', async () => {
-        const res = await request(server).get('/api/genres/1');
-  
-        expect(res.status).toBe(404);
-      });
+      const res = await request(server).get('/api/genres/1');
+
+      expect(res.status).toBe(404);
+    });
   });
+
+  // WITH MOSH REFACTORING
+  // without refactoring commented below
+  describe('POST /', () => {
+    let token;
+    let name;
+
+    const executeHappyTest = async () => {
+      return await request(server).post('/api/genres').set('x-auth-token', token).send({ name });
+    };
+
+    beforeEach(() => {
+      token = new User().generateAuthToken();
+      name = 'genre1';
+    });
+
+    it('should return 401 if client is not logged in', async () => {
+      token = '';
+      const res = await executeHappyTest();
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 400 if genre is less than 3 characters', async () => {
+      name = '12';
+      const res = await executeHappyTest();
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if genre is more than 50 characters', async () => {
+      name = new Array(52).join('a');
+      const res = await executeHappyTest();
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should save the genre if it is valid', async () => {
+      await executeHappyTest();
+      const genre = await Genre.find({ name: 'genre1' });
+
+      expect(genre).not.toBeNull();
+    });
+
+    it('should return genre if it is valid', async () => {
+      const res = await executeHappyTest();
+
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('name', 'genre1');
+    });
+  });
+
+  // describe('POST /', () => {
+  //   it('should return 401 if client is not logged in', async () => {
+  //     const res = await request(server).post('/api/genres').send({ name: 'genre1' });
+
+  //     expect(res.status).toBe(401);
+  //   });
+
+  //   it('should return 400 if genre is less than 3 characters', async () => {
+  //     const token = new User().generateAuthToken();
+
+  //     const res = await request(server).post('/api/genres').set('x-auth-token', token).send({ name: '12' });
+
+  //     expect(res.status).toBe(400);
+  //   });
+
+  //   it('should return 400 if genre is more than 50 characters', async () => {
+  //     const token = new User().generateAuthToken();
+
+  //     const res = await request(server)
+  //       .post('/api/genres')
+  //       .set('x-auth-token', token)
+  //       .send({ name: new Array(52).join('a') });
+
+  //     expect(res.status).toBe(400);
+  //   });
+
+  //   it('should save the genre if it is valid', async () => {
+  //     const token = new User().generateAuthToken();
+
+  //     const res = await request(server).post('/api/genres').set('x-auth-token', token).send({ name: 'genre1' });
+
+  //     const genre = await Genre.find({ name: 'genre1' });
+  //     expect(genre).not.toBeNull();
+  //   });
+
+  //   it('should return genre if it is valid', async () => {
+  //     const token = new User().generateAuthToken();
+
+  //     const res = await request(server).post('/api/genres').set('x-auth-token', token).send({ name: 'genre1' });
+
+  //     expect(res.body).toHaveProperty('_id');
+  //     expect(res.body).toHaveProperty('name', 'genre1');
+  //   });
+  // });
 });
