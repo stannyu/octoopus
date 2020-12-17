@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose",
+    "test": "jest --watchAll --verbose --maxWorkers=1",
     "start": "export octopus_secureKeyJwt=secure_phraze && nodemon index.js"
   },
   "repository": {
