@@ -1,6 +1,4 @@
 {
-  "name": "Overwritten title - Dev",
-  "mail": {
-    "host": "dev-mail-server"
-  }
+  "jwtPrivateKey": "development_key",
+  "db": "mongodb://localhost/octopus_dev"
 }
