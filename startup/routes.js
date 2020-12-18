@@ -9,6 +9,7 @@ const { customers } = require('../routes/customers');
 const { movies } = require('../routes/movies');
 const { rentals } = require('../routes/rentals');
 const { users } = require('../routes/users');
+const { returns } = require('../routes/returns');
 
 function routesInitialization(app) {
   //MIDDLEWARE
@@ -25,6 +26,7 @@ function routesInitialization(app) {
   app.use('/api/movies', movies);
   app.use('/api/rentals', rentals);
   app.use('/api/users', users);
+  app.use('/api/returns', returns);
 
   /**
    * Middleware intersepts exceptions

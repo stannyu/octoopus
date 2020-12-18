@@ -6,7 +6,7 @@
   "scripts": {
     "test": "export NODE_ENV=test && jest --watchAll --verbose --maxWorkers=1",
     "test:cov": "export NODE_ENV=test && jest --watchAll --verbose --maxWorkers=1 --coverage",
-    "start": "export NODE_ENV= && export octopus_secureKeyJwt=secure_phraze && nodemon index.js"
+    "start": "export NODE_ENV=development && export octopus_secureKeyJwt=secure_phraze && nodemon index.js"
   },
   "repository": {
     "type": "git",
