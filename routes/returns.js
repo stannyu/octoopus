@@ -10,10 +10,14 @@ const { Rental } = require('../models/rentals');
 const { Movie } = require('../models/movies');
 
 router.post('/', [auth, validate(validateReturn)], async (req, res) => {
-  const rental = await Rental.findOne({
-    customer: req.body.customer,
-    movie: req.body.movie,
-  });
+  const { customer, movie } = req.body;
+  const rental = await Rental.lookup(customer, movie);
+  
+  // OR
+  // const rental = await Rental.findOne({
+  //   customer: req.body.customer,
+  //   movie: req.body.movie,
+  // });
   if (!rental) {
     return res.status(404).send('No rental with such movie/customer combination found');
   }
