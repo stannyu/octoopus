@@ -20,6 +20,7 @@ function loggingInitialization() {
   // const p = Promise.reject(new Error('When something broken asyncronosly'));
   // p.then(() => console.log('Done'));
 
+  // get db name based on node env variable
   const dbName = config.get('db');
 
   // LOGGER
