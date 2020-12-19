@@ -10,6 +10,9 @@
     "dev": "export NODE_ENV=development && export octopus_secureKeyJwt=secure_phraze_dev && nodemon index.js",
     "prod": "export NODE_ENV=production && export octopus_secureKeyJwt=secure_phraze_prod && nodemon index.js"
   },
+  "engines": {
+    "node": "15.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stannyu/octoopus.git"
