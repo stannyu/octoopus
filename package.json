@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV=test && jest --watchAll --verbose --maxWorkers=1",
-    "test:cov": "export NODE_ENV=test && jest --watchAll --verbose --maxWorkers=1 --coverage",
-    "start": "export NODE_ENV=development && export octopus_secureKeyJwt=secure_phraze && nodemon index.js"
+    "test": "export NODE_ENV=test && export octopus_secureKeyJwt=secure_phraze_test && jest --watchAll --verbose --maxWorkers=1",
+    "test:cov": "export NODE_ENV=test && export octopus_secureKeyJwt=secure_phraze_test &&  jest --watchAll --verbose --maxWorkers=1 --coverage",
+    "dev": "export NODE_ENV=development && export octopus_secureKeyJwt=secure_phraze_dev && nodemon index.js",
+    "prod": "export NODE_ENV=production && export octopus_secureKeyJwt=secure_phraze_prod && nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
