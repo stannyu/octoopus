@@ -7,6 +7,8 @@ function dbInitialization(params) {
   mongoose.set('useFindAndModify', false);
   mongoose.set('useCreateIndex', true);
 
+  console.log('HAHAHAHAH');
+
   mongoose.connect('mongodb://localhost/octopus', { useNewUrlParser: true }).then(() => {
     console.log('DB connected');
     winston.info('Connected to DB');
