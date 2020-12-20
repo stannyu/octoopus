@@ -8,7 +8,7 @@ function dbInitialization(params) {
   mongoose.set('useFindAndModify', false);
   mongoose.set('useCreateIndex', true);
 
-  const dbName = config.get('db');
+  const dbName = process.env.MONGODB_URI || config.get('db');
 
   mongoose.connect(dbName, { useNewUrlParser: true }).then(() => {
     console.log('DB connected: ', dbName);
