@@ -21,7 +21,7 @@ function loggingInitialization() {
   // p.then(() => console.log('Done'));
 
   // get db name based on node env variable
-  const dbName = config.get('db');
+  const dbName = process.env.MONGODB_URI || config.get('db');
 
   // LOGGER
   winston.add(new winston.transports.File({ filename: 'logfile.log' }));
